@@ -1,0 +1,155 @@
+<html><head>
+<title>Screen resolution test (usable area)</title>
+</head><body>
+
+<!--
+More information here:
+
+http://stackoverflow.com/questions/2880520/how-large-is-the-usable-area-in-ipad-safari
+-->
+
+<script type="text/javascript">
+"use strict";
+var bmIdVal = "ios_screen_res_test_bookmarklet";
+var bmDivSize = {
+    w : 320,
+    h : 240 
+};
+
+var vpMeta1 = document.createElement('meta');
+vpMeta1.setAttribute("name","viewport");
+vpMeta1.setAttribute("content",'initial-scale=1.0, maximum-scale=1.0');
+document.head.appendChild(vpMeta1);
+
+function updateStatus(){
+statusDiv.innerHTML = "div is " + bmDivSize.w + ',' + bmDivSize.h + 
+    " doc body says: " + document.body.clientWidth + "," + 
+    document.body.clientHeight;
+}
+
+function resizeBmDiv(wPx,hPx){
+    bmDivSize.w += wPx;
+    bmDivSize.h += hPx;
+    bmDiv.style.width=bmDivSize.w + "px";
+    bmDiv.style.height=bmDivSize.h + "px";
+    updateStatus();
+}
+
+var prevBmDiv = document.getElementById(bmIdVal); 
+if( prevBmDiv != null){
+    document.body.removeChild(prevBmDiv);
+}
+var bmDiv = document.createElement("div");
+bmDiv.setAttribute("id",bmIdVal);
+bmDiv.style.cssText = "position:absolute;left:0px;top:0px;background-color: #0066FF";
+bmDiv.style.width=bmDivSize.w + "px";
+bmDiv.style.height=bmDivSize.h + "px";
+
+var sizerB_w1 = document.createElement("button");
+sizerB_w1.style.cssText = "width:64px;height:64px";
+sizerB_w1.innerHTML="w+1";
+sizerB_w1.onclick = function(evt){
+    resizeBmDiv(1,0);
+};
+var sizerB_w100 = document.createElement("button");
+sizerB_w100.style.cssText = "width:64px;height:64px";
+sizerB_w100.innerHTML="w+100";
+sizerB_w100.onclick = function(evt){
+    resizeBmDiv(100,0);
+};
+var sizerB_h1 = document.createElement("button");
+sizerB_h1.style.cssText = "width:64px;height:64px";
+sizerB_h1.innerHTML="h+1";
+sizerB_h1.onclick = function(evt){
+    resizeBmDiv(0,1);
+};
+var sizerB_h100 = document.createElement("button");
+sizerB_h100.style.cssText = "width:64px;height:64px";
+sizerB_h100.innerHTML="h+100";
+sizerB_h100.onclick = function(evt){
+    resizeBmDiv(0,100);
+};
+
+var sizerDiv = document.createElement('div');
+sizerDiv.appendChild(sizerB_w1);
+sizerDiv.appendChild(sizerB_w100);
+sizerDiv.appendChild(sizerB_h1);
+sizerDiv.appendChild(sizerB_h100);
+
+var sizerB_wm1 = document.createElement("button");
+sizerB_wm1.style.cssText = "width:64px;height:64px";
+sizerB_wm1.innerHTML="w-1";
+sizerB_wm1.onclick = function(evt){
+    resizeBmDiv(-1,0);
+};
+var sizerB_wm100 = document.createElement("button");
+sizerB_wm100.style.cssText = "width:64px;height:64px";
+sizerB_wm100.innerHTML="w-100";
+sizerB_wm100.onclick = function(evt){
+    resizeBmDiv(-100,0);
+};
+var sizerB_hm1 = document.createElement("button");
+sizerB_hm1.style.cssText = "width:64px;height:64px";
+sizerB_hm1.innerHTML="h-1";
+sizerB_hm1.onclick = function(evt){
+    resizeBmDiv(0,-1);
+};
+var sizerB_hm100 = document.createElement("button");
+sizerB_hm100.style.cssText = "width:64px;height:64px";
+sizerB_hm100.innerHTML="h-100";
+sizerB_hm100.onclick = function(evt){
+    resizeBmDiv(0,-100);
+};
+
+var sizerMDiv = document.createElement('div');
+sizerMDiv.appendChild(sizerB_wm1);
+sizerMDiv.appendChild(sizerB_wm100);
+sizerMDiv.appendChild(sizerB_hm1);
+sizerMDiv.appendChild(sizerB_hm100);
+
+var sizerC_w10 = document.createElement("button");
+sizerC_w10.style.cssText = "width:64px;height:64px";
+sizerC_w10.innerHTML="w+10";
+sizerC_w10.onclick = function(evt){
+    resizeBmDiv(10,0);
+};
+var sizerC_h10 = document.createElement("button");
+sizerC_h10.style.cssText = "width:64px;height:64px";
+sizerC_h10.innerHTML="h+10";
+sizerC_h10.onclick = function(evt){
+    resizeBmDiv(0,10);
+};
+var sizerC_Mw10 = document.createElement("button");
+sizerC_Mw10.style.cssText = "width:64px;height:64px";
+sizerC_Mw10.innerHTML="w-10";
+sizerC_Mw10.onclick = function(evt){
+    resizeBmDiv(-10,0);
+};
+var sizerC_Mh10 = document.createElement("button");
+sizerC_Mh10.style.cssText = "width:64px;height:64px";
+sizerC_Mh10.innerHTML="h-10";
+sizerC_Mh10.onclick = function(evt){
+    resizeBmDiv(0,-10);
+};
+
+var sizerCDiv = document.createElement('div');
+sizerCDiv.appendChild(sizerC_w10);
+sizerCDiv.appendChild(sizerC_h10);
+sizerCDiv.appendChild(sizerC_Mw10);
+sizerCDiv.appendChild(sizerC_Mh10);
+
+var statusDiv = document.createElement('div');
+statusDiv.style.cssText = "color:white;";
+
+bmDiv.appendChild(statusDiv);
+bmDiv.appendChild(sizerDiv);
+bmDiv.appendChild(sizerMDiv);
+bmDiv.appendChild(sizerCDiv);
+document.body.appendChild(bmDiv);
+updateStatus();
+
+window.onresize = function(event) {
+    document.location.reload(true);
+}
+</script>
+</body></html>
